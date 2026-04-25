@@ -444,8 +444,8 @@
 // ══════════════════════════════════════════════════
 //  ⚠️  CONFIGURACIÓN — REEMPLAZA ESTOS DOS VALORES
 // ══════════════════════════════════════════════════
-const SUPABASE_URL = 'TU_SUPABASE_URL';       // ej: https://abcxyz.supabase.co
-const SUPABASE_KEY = 'TU_SUPABASE_ANON_KEY';  // ej: sb_publishable_...
+const SUPABASE_URL = '__SUPABASE_URL__';       // ej: https://abcxyz.supabase.co
+const SUPABASE_KEY = '__SUPABASE_KEY__';  // ej: sb_publishable_...
 
 // ══════════════════════════════════════════════════
 //  CONSTANTES
@@ -479,7 +479,7 @@ let preSlot      = null;
 //  INIT
 // ══════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-    if (SUPABASE_URL === 'TU_SUPABASE_URL') {
+    if (SUPABASE_URL === '__SUPABASE_URL__') {
         document.getElementById('calGrid').innerHTML =
             '<div class="config-warning" style="grid-column:1/-1"><strong>⚙️ Configuración pendiente</strong>Edita el archivo <code>index.html</code> y reemplaza <code>TU_SUPABASE_URL</code> y <code>TU_SUPABASE_ANON_KEY</code> con los valores de tu proyecto en Supabase.</div>';
         return;
