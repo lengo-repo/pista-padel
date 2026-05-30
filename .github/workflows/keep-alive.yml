@@ -1,0 +1,27 @@
+name: Padel · Mantenimiento Supabase
+
+on:
+  schedule:
+    - cron: '0 8 * * 1,4'  # Lunes y jueves a las 8:00 UTC (10:00 Madrid)
+  workflow_dispatch:        # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  mantenimiento:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Limpiar reservas antiguas y mantener Supabase activo
+        run: |
+          RESULT=$(curl -s -w "\n%{http_code}" -X POST \
+            "${{ secrets.SUPABASE_URL }}/rest/v1/rpc/limpiar_reservas_antiguas" \
+            -H "apikey: ${{ secrets.SUPABASE_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{}')
+          HTTP_CODE=$(echo "$RESULT" | tail -n1)
+          BODY=$(echo "$RESULT" | head -n1)
+          echo "HTTP: $HTTP_CODE | Reservas eliminadas: $BODY"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "❌ Error en la limpieza (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+          echo "✅ Mantenimiento completado correctamente"
